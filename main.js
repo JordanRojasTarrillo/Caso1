@@ -22,4 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
             searchVideos(searchTerm);
         }
     });
+
+    // Función para buscar videos
+    function searchVideos(query) {
+        fetch(`youtube_api.php?action=search&q=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API');
+                }
+                return response.json();
+            })
+            .then(data => {
+                loadingIndicator.classList.add('d-none');
+                displayResults(data.items);
+            })
+            .catch(error => {
+                loadingIndicator.classList.add('d-none');
+                resultsContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="alert alert-danger">
+                            Error al buscar videos: ${error.message}
+                        </div>
+                    </div>
+                `;
+                console.error('Error:', error);
+            });
+    }
 });
