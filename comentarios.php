@@ -46,5 +46,37 @@ function getVideoComments($video_id, $maxResults) {
  * @param string $url URL de la API
  * @return string Respuesta de la API
  */
+function makeApiRequest($url) {
+    // Inicializar cURL
+    $ch = curl_init();
+    
+    // Configurar opciones de cURL
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    
+    // Ejecutar la solicitud
+    $response = curl_exec($ch);
+    
+    // Verificar si hubo errores
+    if (curl_errno($ch)) {
+        sendErrorResponse('Error en la solicitud cURL: ' . curl_error($ch));
+    }
+    
+    // Cerrar la conexión cURL
+    curl_close($ch);
+    
+    return $response;
+}
 
+/**
+ * Envía una respuesta de error en formato JSON
+ * 
+ * @param string $message Mensaje de error
+ */
+function sendErrorResponse($message) {
+    header('Content-Type: application/json');
+    echo json_encode(['error' => true, 'message' => $message]);
+    exit;
+}
 ?>
