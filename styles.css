@@ -1,0 +1,192 @@
+/* Estilos generales */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Estilos para las tarjetas de video */
+.video-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.video-thumbnail {
+    position: relative;
+    overflow: hidden;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail img {
+    transform: scale(1.05);
+}
+
+.video-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.video-channel {
+    font-size: 0.9rem;
+    color: #606060;
+    margin-bottom: 0.5rem;
+}
+
+.video-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #606060;
+}
+
+/* Estilos para el modal de video - ACTUALIZADO PARA VIDEO MÁS GRANDE */
+.video-container {
+    position: relative;
+    padding-bottom: 75%; /* Aumentado de 56.25% para hacer el video más alto */
+    height: 0;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Hacer que el video ocupe más espacio en el modal */
+@media (min-width: 992px) {
+    /* Ajustar el layout para dar más espacio al video */
+    #videoModal .modal-dialog {
+        max-width: 95%; /* Hacer el modal casi de pantalla completa */
+        margin: 10px auto;
+    }
+    
+    #videoModal .modal-content {
+        height: 90vh; /* Altura casi completa de la ventana */
+    }
+    
+    #videoModal .modal-body {
+        max-height: calc(90vh - 120px); /* Altura ajustada para el contenido */
+        overflow-y: auto;
+    }
+    
+    .video-container {
+        padding-bottom: 65%; /* Proporción ajustada */
+        max-height: 70vh; /* Altura máxima relativa a la ventana */
+    }
+    
+    #videoModal .col-lg-8 {
+        flex: 0 0 75%; /* Hacer la columna del video más ancha */
+        max-width: 75%;
+    }
+    
+    #videoModal .col-lg-4 {
+        flex: 0 0 25%; /* Ajustar la columna de detalles */
+        max-width: 25%;
+    }
+}
+
+/* Estilos para los comentarios */
+.comment-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.comment-author {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #606060;
+}
+
+.comment-text {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Estilos para el spinner de carga */
+#loading {
+    padding: 2rem 0;
+}
+
+/* Ajustes adicionales para el modal */
+#videoModal .modal-body {
+    padding: 1.5rem;
+}
+
+/* Hacer que el video sea aún más grande en pantallas muy grandes */
+@media (min-width: 1200px) {
+    .video-container {
+        padding-bottom: 56.25%; /* Proporción 16:9 estándar */
+        height: 0;
+        overflow: hidden;
+        max-height: none; /* Quitar la altura máxima para pantallas grandes */
+    }
+    
+    /* Estilos específicos para hacer el video más grande */
+    .video-details-container {
+        padding: 0;
+    }
+    
+    .video-details-container .row {
+        margin: 0;
+    }
+    
+    .video-details-container .col-lg-8 {
+        padding: 0;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .video-details-container .video-container {
+        margin-bottom: 0;
+        height: 70vh; /* Altura fija relativa a la ventana */
+        padding-bottom: 0; /* Anular el padding-bottom */
+    }
+    
+    .video-details-container iframe {
+        position: relative;
+        height: 70vh; /* Altura fija relativa a la ventana */
+    }
+    
+    /* Mover la información debajo del video */
+    .video-details-container .col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
+}
