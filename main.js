@@ -99,5 +99,51 @@ document.addEventListener('DOMContentLoaded', function() {
             resultsContainer.appendChild(videoCard);
         });
     }
-   
+   // Función para mostrar detalles del video
+   function showVideoDetails(videoId) {
+    // Mostrar indicador de carga en el modal
+    videoDetails.innerHTML = `
+        <div class="text-center p-5">
+            <div class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+    `;
+    videoComments.innerHTML = '';
+    
+    // Mostrar el modal
+    videoModal.show();
+    
+    // Cargar detalles del video
+    fetch(`detalles_video.php?video_id=${videoId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar los detalles del video');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayVideoDetails(data, videoId);
+            
+            // Cargar comentarios
+            return fetch(`comentarios.php?video_id=${videoId}`);
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar los comentarios');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayComments(data);
+        })
+        .catch(error => {
+            videoDetails.innerHTML = `
+                <div class="alert alert-danger">
+                    Error: ${error.message}
+                </div>
+            `;
+            console.error('Error:', error);
+        });
+}
 });
