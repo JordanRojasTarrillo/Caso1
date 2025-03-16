@@ -60,7 +60,6 @@ function searchVideos($query, $maxResults) {
  * @param string $url URL de la API
  * @return string Respuesta de la API
  */
-<<<<<<< HEAD
 function makeApiRequest($url) {
     // Inicializar cURL
     $ch = curl_init();
@@ -94,7 +93,4 @@ function sendErrorResponse($message) {
     echo json_encode(['error' => true, 'message' => $message]);
     exit;
 }
-=======
-
->>>>>>> 0bbba537891ba88ec685c764dbd500e7d4cd4233
 ?>
