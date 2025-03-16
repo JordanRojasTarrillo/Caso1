@@ -8,5 +8,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoDetails = document.getElementById('video-details');
     const videoComments = document.getElementById('video-comments');
 
-    
+    // Evento para el formulario de búsqueda
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const searchTerm = searchInput.value.trim();
+        
+        if (searchTerm) {
+            // Mostrar indicador de carga
+            resultsContainer.innerHTML = '';
+            loadingIndicator.classList.remove('d-none');
+            
+            // Realizar la búsqueda
+            searchVideos(searchTerm);
+        }
+    });
 });
