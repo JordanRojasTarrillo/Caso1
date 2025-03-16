@@ -48,4 +48,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
             });
     }
+    // Función para mostrar los resultados
+    function displayResults(videos) {
+        if (!videos || videos.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="alert alert-info">
+                        No se encontraron resultados para tu búsqueda.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        resultsContainer.innerHTML = '';
+        
+        videos.forEach(video => {
+            // Obtener información del video
+            const videoId = video.id.videoId;
+            const title = video.snippet.title;
+            const thumbnail = video.snippet.thumbnails.high.url;
+            const channelTitle = video.snippet.channelTitle;
+            const publishedAt = new Date(video.snippet.publishedAt).toLocaleDateString();
+            
+            // Crear tarjeta para el video
+            const videoCard = document.createElement('div');
+            videoCard.className = 'col';
+            videoCard.innerHTML = `
+                <div class="card h-100 video-card" data-video-id="${videoId}">
+                    <div class="video-thumbnail">
+                        <img src="${thumbnail}" alt="${title}" class="card-img-top">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="video-title">${title}</h5>
+                        <p class="video-channel">${channelTitle}</p>
+                        <div class="video-stats">
+                            <span><i class="bi bi-calendar"></i> ${publishedAt}</span>
+                            <span><i class="bi bi-eye"></i> Ver detalles</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Agregar evento de clic para mostrar detalles
+            videoCard.querySelector('.video-card').addEventListener('click', function() {
+                const videoId = this.getAttribute('data-video-id');
+                showVideoDetails(videoId);
+            });
+            
+            resultsContainer.appendChild(videoCard);
+        });
+    }
+   
 });
