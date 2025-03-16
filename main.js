@@ -146,4 +146,63 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         });
 }
+     // Función para mostrar los detalles del video - MODIFICADA PARA UN VIDEO MÁS GRANDE
+    function displayVideoDetails(videoData, videoId) {
+        if (!videoData || !videoData.items || videoData.items.length === 0) {
+            videoDetails.innerHTML = `
+                <div class="alert alert-warning">
+                    No se pudieron cargar los detalles del video.
+                </div>
+            `;
+            return;
+        }
+        
+        const video = videoData.items[0];
+        const title = video.snippet.title;
+        const description = video.snippet.description.replace(/\n/g, '<br>');
+        const channelTitle = video.snippet.channelTitle;
+        const publishedAt = new Date(video.snippet.publishedAt).toLocaleDateString();
+        const viewCount = parseInt(video.statistics.viewCount).toLocaleString();
+        const likeCount = parseInt(video.statistics.likeCount).toLocaleString();
+        
+        // Modificado para hacer el video más grande
+        videoDetails.innerHTML = `
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="video-container mb-3">
+                        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                                title="${title}" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <h4 class="mt-3">${title}</h4>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>
+                            <i class="bi bi-person-circle"></i> ${channelTitle}
+                        </span>
+                        <span>
+                            <i class="bi bi-eye"></i> ${viewCount} visualizaciones
+                        </span>
+                        <span>
+                            <i class="bi bi-hand-thumbs-up"></i> ${likeCount} me gusta
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <i class="bi bi-info-circle"></i> Información del video
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Fecha de publicación:</strong> ${publishedAt}</p>
+                            <hr>
+                            <h6>Descripción:</h6>
+                            <div class="description-container" style="max-height: 300px; overflow-y: auto;">
+                                <p>${description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 });
