@@ -18,5 +18,28 @@ getVideoDetails($video_id);
  * 
  * @param string $video_id ID del video
  */
+function getVideoDetails($video_id) {
+    global $api_key, $api_url;
+    
+    // Construir la URL de la API
+    $url = $api_url . 'videos?' . http_build_query([
+        'part' => 'snippet,statistics',
+        'id' => $video_id,
+        'key' => $api_key
+    ]);
+    
+    // Realizar la solicitud a la API
+    $response = makeApiRequest($url);
+    
+    // Enviar la respuesta
+    header('Content-Type: application/json');
+    echo $response;
+}
 
+/**
+ * Realiza una solicitud a la API de YouTube
+ * 
+ * @param string $url URL de la API
+ * @return string Respuesta de la API
+ */
 ?>
