@@ -205,4 +205,48 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
+    // Función para mostrar los comentarios
+    function displayComments(commentsData) {
+        if (!commentsData || !commentsData.items || commentsData.items.length === 0) {
+            videoComments.innerHTML = `
+                <div class="alert alert-info">
+                    No hay comentarios disponibles para este video.
+                </div>
+            `;
+            return;
+        }
+        
+        videoComments.innerHTML = '';
+        
+        commentsData.items.forEach(item => {
+            const comment = item.snippet.topLevelComment.snippet;
+            const authorName = comment.authorDisplayName;
+            const authorProfileImg = comment.authorProfileImageUrl;
+            const commentText = comment.textDisplay;
+            const publishedAt = new Date(comment.publishedAt).toLocaleDateString();
+            const likeCount = comment.likeCount;
+            
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment-item';
+            commentElement.innerHTML = `
+                <div class="d-flex">
+                    <div class="me-3">
+                        <img src="${authorProfileImg}" alt="${authorName}" class="comment-avatar">
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <span class="comment-author">${authorName}</span>
+                            <span class="comment-date">${publishedAt}</span>
+                        </div>
+                        <div class="comment-text">${commentText}</div>
+                        <div class="mt-2">
+                            <small><i class="bi bi-hand-thumbs-up"></i> ${likeCount}</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            videoComments.appendChild(commentElement);
+        });
+    }
 });
