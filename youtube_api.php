@@ -28,6 +28,37 @@ switch ($action) {
     default:
         sendErrorResponse('Acción no válida');
 }
+/**
+ * Busca videos en YouTube según el término de búsqueda
+ * 
+ * @param string $query Término de búsqueda
+ * @param int $maxResults Número máximo de resultados
+ */
+function searchVideos($query, $maxResults) {
+    global $api_key, $api_url;
+    
+    // Construir la URL de la API
+    $url = $api_url . 'search?' . http_build_query([
+        'part' => 'snippet',
+        'q' => $query,
+        'maxResults' => $maxResults,
+        'type' => 'video',
+        'key' => $api_key
+    ]);
+    
+    // Realizar la solicitud a la API
+    $response = makeApiRequest($url);
+    
+    // Enviar la respuesta
+    header('Content-Type: application/json');
+    echo $response;
+}
 
+/**
+ * Realiza una solicitud a la API de YouTube
+ * 
+ * @param string $url URL de la API
+ * @return string Respuesta de la API
+ */
 
 ?>
