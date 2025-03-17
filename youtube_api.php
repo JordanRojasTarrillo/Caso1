@@ -3,6 +3,9 @@
 $api_key = 'AIzaSyBdDsQeeEx1G4SPw--o-Gduthoe6K1XH1A';
 $api_url = 'https://www.googleapis.com/youtube/v3/';
 
+
+//Conflictos con este archivo creare un nuevo commit que no genere problemas sobre este 
+//Coloca simbolos raros inusual 
 // Verificar si se ha enviado una acción
 if (!isset($_GET['action'])) {
     sendErrorResponse('No se especificó ninguna acción');
@@ -46,6 +49,7 @@ function searchVideos($query, $maxResults) {
         'key' => $api_key
     ]);
     
+
     // Realizar la solicitud a la API
     $response = makeApiRequest($url);
     
@@ -53,6 +57,9 @@ function searchVideos($query, $maxResults) {
     header('Content-Type: application/json');
     echo $response;
 }
+
+
+
 
 /**
  * Realiza una solicitud a la API de YouTube
@@ -83,11 +90,17 @@ function makeApiRequest($url) {
     return $response;
 }
 
+
+
 /**
  * Envía una respuesta de error en formato JSON
  * 
  * @param string $message Mensaje de error
  */
+
+
+
+
 function sendErrorResponse($message) {
     header('Content-Type: application/json');
     echo json_encode(['error' => true, 'message' => $message]);
